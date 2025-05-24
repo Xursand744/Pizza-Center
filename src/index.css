@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    .btn {
+        background: #ff2a51;
+        color: white;
+        font-size: 18px;
+        padding: 4px 12px;
+        border-radius: 24px;
+    }
+}
