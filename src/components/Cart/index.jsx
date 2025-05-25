@@ -1,31 +1,28 @@
-"use client"
-
 import { useCart } from "../../context/CartContext"
 import { useState, useEffect } from "react"
 import { X, CheckCheck } from "lucide-react"
 import Burger from "../../assets/Burger.jpg"
 import Chiz from "../../assets/chiz.jpg"
 import Chis from "../../assets/chis.jpg"
-import Salat from "../../assets/salat.jpg"
+
 import Sprite from "../../assets/sprite.jpg"
 import Fanta from "../../assets/fanta.jpg"
 import Cola from "../../assets/cola.jpg"
+import Hoddog from "../../assets/hoddog.jpg"
+import Chizz from "../../assets/chizz.jpg"
+import Yello from "../../assets/yellow.jpg"
 
-// Size images - you'll need to replace these with your actual images
-const sizeImages = {
-  Kichik: "/placeholder.svg?height=120&width=120",
-  "O'rtacha": "/placeholder.svg?height=160&width=160",
-  Katta: "/placeholder.svg?height=200&width=200",
-}
 
 // Categorized products
 const foodProducts = [
-  { id: 1, img: Burger, name: "Big sanders burger achchiq", price: 12000, hasSizes: false, category: "food" },
+  { id: 1, img: Chizz, name: "Big sanders burger achchiq", price: 12000, hasSizes: false, category: "food" },
   { id: 2, img: Chis, name: "Margherita Pizza", price: 15000, hasSizes: true, category: "food" },
-  { id: 3, img: Salat, name: "Caesar Salad", price: 14000, hasSizes: true, category: "food" },
-  { id: 4, img: Chiz, name: "Cheese Pizza", price: 12000, hasSizes: true, category: "food" },
+
+  { id: 4, img: Chiz, name: "Cheese Pizza", price: 12000, hasSizes: false, category: "food" },
   { id: 5, img: Burger, name: "Classic Burger", price: 15000, hasSizes: false, category: "food" },
   { id: 6, img: Chis, name: "Pepperoni Pizza", price: 14000, hasSizes: true, category: "food" },
+  { id: 7, img: Hoddog, name: "Bittalig Burger", price: 12000, hasSizes: false, category: "food" },
+
 ]
 
 const drinkProducts = [
@@ -66,7 +63,7 @@ const drinkProducts = [
 const dessertProducts = [
   {
     id: 20,
-    img: "/placeholder.svg?height=250&width=250",
+    img: Burger,
     name: "Chocolate Cake",
     price: 18000,
     hasSizes: false,
@@ -74,7 +71,7 @@ const dessertProducts = [
   },
   {
     id: 21,
-    img: "/placeholder.svg?height=250&width=250",
+    img: Burger,
     name: "Cheesecake",
     price: 20000,
     hasSizes: false,
@@ -82,7 +79,7 @@ const dessertProducts = [
   },
   {
     id: 22,
-    img: "/placeholder.svg?height=250&width=250",
+    img: Burger,
     name: "Ice Cream",
     price: 8000,
     hasSizes: false,
@@ -115,6 +112,31 @@ const additionalItems = [
   },
 ]
 
+// Fireworks component
+const Fireworks = () => {
+  const [particles, setParticles] = useState([])
+
+  
+
+  return (
+    <div className="fixed inset-0 pointer-events-none z-40">
+      {particles.map((particle) => (
+        <div
+          key={particle.id}
+          className="absolute w-2 h-2 rounded-full animate-ping"
+          style={{
+            left: `${particle.x}%`,
+            top: `${particle.y}%`,
+            backgroundColor: particle.color,
+            animationDelay: `${particle.delay}s`,
+            animationDuration: `${particle.duration}s`,
+          }}
+        />
+      ))}
+    </div>
+  )
+}
+
 function Cart() {
   const { cart, addToCart, removeFromCart, clearCart } = useCart()
   const [total, setTotal] = useState(0)
@@ -125,6 +147,8 @@ function Cart() {
     spicy: false,
     fries: false,
   })
+  const [showConfirmation, setShowConfirmation] = useState(false)
+  const [showFireworks, setShowFireworks] = useState(false)
 
   useEffect(() => {
     const sum = cart.reduce((acc, item) => acc + item.price * item.qty, 0)
@@ -147,7 +171,16 @@ function Cart() {
 
     const existingOrders = JSON.parse(localStorage.getItem("orders") || "[]")
     localStorage.setItem("orders", JSON.stringify([newOrder, ...existingOrders]))
-    clearCart()
+
+    // Show fireworks first
+    setShowFireworks(true)
+
+    // Then show confirmation after a short delay
+    setTimeout(() => {
+      clearCart()
+      setShowConfirmation(true)
+      setShowFireworks(false)
+    }, 2000)
   }
 
   const openModal = (product) => {
@@ -246,6 +279,9 @@ function Cart() {
 
   return (
     <div className="relative flex">
+      {/* Fireworks Animation */}
+      {showFireworks && <Fireworks />}
+
       {/* Mahsulotlar ro'yxati */}
       <div className="w-full pr-[470px] p-4 text-white">
         {/* Food section */}
@@ -465,6 +501,36 @@ function Cart() {
                 Savatga qo'shish
               </button>
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* Confirmation Modal with Enhanced Price Visibility */}
+      {showConfirmation && (
+        <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50">
+          <div className="bg-white p-8 rounded-2xl w-[600px] shadow-2xl text-center">
+            <div className="mb-8">
+              <div className="w-24 h-24 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                <CheckCheck className="w-12 h-12 text-green-600" />
+              </div>
+              <h3 className="text-3xl font-bold text-gray-800 mb-4">Buyurtma qabul qilindi!</h3>
+              <p className="text-xl text-gray-600 mb-8">Rahmat, iltimos to'lovni amalga oshiring</p>
+
+              {/* Enhanced Price Display */}
+              <div className="bg-gradient-to-r from-green-500 to-green-600 p-8 rounded-2xl shadow-lg mb-6">
+                <p className="text-white text-lg font-medium mb-2">To'lov miqdori:</p>
+                <p className="text-white text-5xl font-bold tracking-wide">
+                  {total.toLocaleString()} <span className="text-3xl">so'm</span>
+                </p>
+              </div>
+            </div>
+
+            <button
+              onClick={() => setShowConfirmation(false)}
+              className="w-full py-5 px-6 bg-green-600 text-white rounded-xl font-bold text-xl hover:bg-green-700 transition-colors shadow-lg"
+            >
+              Yaxshi
+            </button>
           </div>
         </div>
       )}

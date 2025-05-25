@@ -1,5 +1,3 @@
-"use client"
-
 import { useState, useEffect } from "react"
 import { HandPlatter, Clock, CheckCircle, ChefHat } from "lucide-react"
 
