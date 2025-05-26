@@ -257,21 +257,22 @@ function Cart() {
       <h2 className="text-2xl font-bold mb-4 pl-2 border-l-4 border-green-500">{title}</h2>
       <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-6">
         {products.map((item) => (
-          <div key={item.id} className="flex flex-col bg-white rounded-t-3xl">
-            <div
-              className="border rounded-3xl shadow bg-white cursor-pointer hover:shadow-lg transition-shadow overflow-hidden"
-              onClick={() => openModal(item)}
-            >
-              <div className="h-[250px] overflow-hidden">
-                <img src={item.img || "/placeholder.svg"} alt="" className="w-full h-full object-cover" />
-              </div>
-            </div>
-            {/* Name and price outside the card */}
-            <div className="mt-3 px-2 ">
-              <h3 className="font-semibold text-lg text-black">{item.name}</h3>
-              <p className="text-black font-semibold text-[20px]">{item.price.toLocaleString()} so'm</p>
-            </div>
-          </div>
+         <div key={item.id} className="flex flex-col bg-white rounded-t-3xl shadow-xl">
+         <div
+           className="border rounded-3xl shadow bg-white cursor-pointer hover:shadow-lg transition-shadow overflow-hidden"
+           onClick={() => openModal(item)}
+         >
+           <div className="w-full aspect-[4/3]">
+             <img src={item.img || "/placeholder.svg"} alt="" className="w-full h-full object-cover" />
+           </div>
+         </div>
+         {/* Name and price outside the card */}
+         <div className="mt-3 px-2">
+           <h3 className="font-semibold text-lg text-black">{item.name}</h3>
+           <p className="text-black font-semibold text-[20px]">{item.price.toLocaleString()} so'm</p>
+         </div>
+       </div>
+       
         ))}
       </div>
     </div>
@@ -363,17 +364,17 @@ function Cart() {
             <span className="text-[22px] font-bold text-gray-800 ">{total.toLocaleString()} so'm</span>
           </div>
 
-          <div className="flex gap-3">
+          <div className="space-y-3 xl:space-y-0 xl:flex gap-3">
             <button
               onClick={clearCart}
-              className="flex-1 py-4 px-4 border border-gray-300 rounded-lg text-gray-700 font-medium hover:bg-gray-50 transition-colors"
+              className="w-full  flex-1 py-4 px-4 border  border-gray-300 rounded-lg text-gray-700 font-medium hover:bg-gray-50 transition-colors"
             >
               Savatni yangilash
             </button>
             <button
               onClick={handleOrder}
               disabled={cart.length === 0}
-              className="flex-1 py-4 px-4 bg-gray-800 text-white rounded-lg font-medium hover:bg-gray-900 disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors"
+              className="w-full  flex-1 py-4 px-4 bg-gray-800  text-white rounded-lg font-medium hover:bg-gray-900 disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors"
             >
               Buyurtma berish
             </button>
