@@ -255,7 +255,7 @@ function Cart() {
   const renderProductCategory = (products, title) => (
     <div className="mb-8">
       <h2 className="text-2xl font-bold mb-4 pl-2 border-l-4 border-green-500">{title}</h2>
-      <div className="grid grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-6">
         {products.map((item) => (
           <div key={item.id} className="flex flex-col bg-white rounded-t-3xl">
             <div
@@ -283,7 +283,7 @@ function Cart() {
       {showFireworks && <Fireworks />}
 
       {/* Mahsulotlar ro'yxati */}
-      <div className="w-full pr-[470px] p-4 text-white">
+      <div className="w-full  p-4 text-white">
         {/* Food section */}
         {renderProductCategory(foodProducts, "Taomlar")}
 
@@ -295,7 +295,7 @@ function Cart() {
       </div>
 
       {/* Savat - Updated Design */}
-      <div className="fixed top-5 bottom-5 right-4 w-[450px] bg-gray-50 border rounded-2xl shadow-lg flex flex-col z-50">
+      <div className="sticky top-5 h-[92vh] right-4 w-[350px]  lg:w-[450px]  bg-gray-50 border rounded-2xl shadow-lg flex flex-col z-50">
         {/* Header */}
         <div className="p-6 border-b border-gray-200">
           <h2 className="text-2xl font-bold text-gray-800 text-center">Savatcha</h2>
